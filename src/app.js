@@ -13,8 +13,9 @@ const users = [
   },
   {
     username: "gato",
-    avatar: "https://www.larazon.es/resizer/6ZgsBmWHenWo-kxfXbG3DLl0j_g=/600x400/smart/filters:format(jpg)/cloudfront-eu-central-1.images.arcpublishing.com/larazon/WDD4YYSISFGDRJPKHYGRUIRTRU.jpg"
-  }
+    avatar:
+      "https://www.larazon.es/resizer/6ZgsBmWHenWo-kxfXbG3DLl0j_g=/600x400/smart/filters:format(jpg)/cloudfront-eu-central-1.images.arcpublishing.com/larazon/WDD4YYSISFGDRJPKHYGRUIRTRU.jpg",
+  },
 ];
 
 const tweets = [
@@ -24,8 +25,8 @@ const tweets = [
   },
   {
     username: "gato",
-    tweet: "miau"
-  }
+    tweet: "miau",
+  },
 ];
 
 server.post("/sign-up", (req, ans) => {
@@ -47,24 +48,26 @@ server.get("/tweets", (req, ans) => {
     }
   }
 
-  const avatarTweets = (tweets.length > 10 ? lastTweets : tweets).map(
-    (tweet) => {
+  const avatarTweets = (tweets.length > 10 ? lastTweets : tweets)
+    .map((tweet) => {
       const find = users.find((item) => item.username === tweet.username);
       const avatarTweet = { ...tweet, avatar: find.avatar };
       return avatarTweet;
-    }
-  ).reverse();
+    })
+    .reverse();
   ans.send(avatarTweets);
 });
 
-server.post('/tweets', (req, ans) => {
-  const {username, tweet} = req.body
+server.post("/tweets", (req, ans) => {
+  const { username, tweet } = req.body;
   const tweetPost = {
     username,
-    tweet
-  }
-  tweets.push(tweetPost)
-  ans.send('OK')
-})
+    tweet,
+  };
+  tweets.push(tweetPost);
+  ans.send("OK");
+});
 
-server.listen(5000);
+server.listen(5000, () => {
+  console.log("App running at port: 5000");
+});
